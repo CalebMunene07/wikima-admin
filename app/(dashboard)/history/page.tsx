@@ -1,3 +1,4 @@
+export const runtime = 'edge';
 import { supabaseAdmin } from "@/lib/supabase-server";
 import HistoryTable from "@/components/HistoryTable";
 export const revalidate = 0;

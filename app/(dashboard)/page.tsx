@@ -1,3 +1,4 @@
+export const runtime = 'edge';
 import { supabaseAdmin } from "@/lib/supabase-server";
 import StatsCard from "@/components/StatsCard";
 export const revalidate = 0;

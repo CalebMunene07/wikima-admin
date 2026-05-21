@@ -1,3 +1,4 @@
+export const runtime = 'edge';
 import { supabaseAdmin } from "@/lib/supabase-server";
 import TourForm from "@/components/TourForm";
 import { notFound } from "next/navigation";

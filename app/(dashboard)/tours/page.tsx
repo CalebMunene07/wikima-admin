@@ -1,3 +1,4 @@
+export const runtime = 'edge';
 import { supabaseAdmin } from "@/lib/supabase-server";
 import ToursTable from "@/components/ToursTable";
 import Link from "next/link";

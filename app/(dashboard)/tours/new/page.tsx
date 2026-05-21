@@ -1,3 +1,4 @@
+export const runtime = 'edge';
 import TourForm from "@/components/TourForm";
 export default function NewTourPage() {
   return (
