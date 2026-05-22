@@ -1,6 +1,10 @@
 export const runtime = 'edge';
-import { redirect } from 'next/navigation';
+import { NextResponse } from 'next/server';
+
+export async function GET() {
+  return NextResponse.redirect(new URL('/login', 'https://wikima-admin.pages.dev'));
+}
 
 export default function Home() {
-  redirect('/login');
+  return null;
 }
