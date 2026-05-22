@@ -16,3 +16,16 @@ export type TourHistory = {
   snapshot: Record<string, unknown>;
   created_at: string;
 };
+
+export type Tour = {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  duration: string;
+  location: string;
+  image_url: string;
+  available: boolean;
+  created_at: string;
+  updated_at: string;
+};
