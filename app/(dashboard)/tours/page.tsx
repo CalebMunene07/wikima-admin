@@ -4,7 +4,7 @@ import ToursTable from "@/components/ToursTable";
 import Link from "next/link";
 export const revalidate = 0;
 export default async function ToursPage() {
-  const { data: tours, error } = await supabaseAdmin.from("tours").select("*").order("created_at", { ascending: false });
+  const { data: tours, error } = await supabaseAdmin().from("tours").select("*").order("created_at", { ascending: false });
   return (
     <div>
       <div className="flex items-center justify-between mb-6">

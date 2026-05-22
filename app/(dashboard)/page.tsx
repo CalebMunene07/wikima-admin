@@ -4,15 +4,15 @@ import StatsCard from "@/components/StatsCard";
 export const revalidate = 0;
 export default async function AnalyticsPage() {
   const [{ count: totalTours }, { count: activeTours }, { count: totalBookings }, { count: pendingBookings }, { count: confirmedBookings }] = await Promise.all([
-    supabaseAdmin.from("tours").select("*", { count: "exact", head: true }),
-    supabaseAdmin.from("tours").select("*", { count: "exact", head: true }).eq("is_active", true),
-    supabaseAdmin.from("bookings").select("*", { count: "exact", head: true }),
-    supabaseAdmin.from("bookings").select("*", { count: "exact", head: true }).eq("status", "pending"),
-    supabaseAdmin.from("bookings").select("*", { count: "exact", head: true }).eq("status", "confirmed"),
+    supabaseAdmin().from("tours").select("*", { count: "exact", head: true }),
+    supabaseAdmin().from("tours").select("*", { count: "exact", head: true }).eq("is_active", true),
+    supabaseAdmin().from("bookings").select("*", { count: "exact", head: true }),
+    supabaseAdmin().from("bookings").select("*", { count: "exact", head: true }).eq("status", "pending"),
+    supabaseAdmin().from("bookings").select("*", { count: "exact", head: true }).eq("status", "confirmed"),
   ]);
-  const { data: revenueData } = await supabaseAdmin.from("bookings").select("total_amount").eq("status", "confirmed");
+  const { data: revenueData } = await supabaseAdmin().from("bookings").select("total_amount").eq("status", "confirmed");
   const totalRevenue = revenueData?.reduce((sum, b) => sum + (b.total_amount ?? 0), 0) ?? 0;
-  const { data: recentBookings } = await supabaseAdmin.from("bookings")
+  const { data: recentBookings } = await supabaseAdmin().from("bookings")
     .select("id, guest_name, reference, status, total_amount, travel_date, tour_title, package")
     .order("created_at", { ascending: false }).limit(5);
   return (

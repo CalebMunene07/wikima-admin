@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 type Props = { params: Promise<{ id: string }> };
 export default async function EditTourPage({ params }: Props) {
   const { id } = await params;
-  const { data: tour, error } = await supabaseAdmin.from("tours").select("*").eq("id", id).single();
+  const { data: tour, error } = await supabaseAdmin().from("tours").select("*").eq("id", id).single();
   if (error || !tour) notFound();
   return (
     <div>
