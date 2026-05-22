@@ -15,7 +15,7 @@ export default function LoginPage() {
   const handleLogin = async () => {
     if (!email || !password) { setError("Enter email and password."); return; }
     setLoading(true); setError(null);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await supabase().auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) { setError(error.message); return; }
     router.push("/tours");

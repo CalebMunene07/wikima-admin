@@ -16,7 +16,7 @@ const links = [
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const handleSignOut = async () => { await supabase.auth.signOut(); router.push("/login"); };
+  const handleSignOut = async () => { await supabase().auth.signOut(); router.push("/login"); };
 
   return (
     <aside className="w-64 flex flex-col h-screen sticky top-0 shrink-0"
