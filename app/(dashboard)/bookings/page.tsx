@@ -3,7 +3,7 @@ import { getSupabaseAdmin as supabaseAdmin } from "@/lib/supabase-server";
 import BookingsTable from "@/components/BookingsTable";
 export const revalidate = 0;
 export default async function BookingsPage() {
-  const { data: bookings, error } = await supabaseAdmin
+  const { data: bookings, error } = await supabaseAdmin()
     .from("bookings")
     .select("*")
     .order("created_at", { ascending: false });
