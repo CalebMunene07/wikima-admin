@@ -27,7 +27,7 @@ export async function PUT(req: NextRequest) {
 export async function DELETE(req: NextRequest) {
   const { id } = await req.json();
   if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
-  const { error } = await supabaseAdmin.from("bookings").delete().eq("id", id);
+  const { error } = await supabaseAdmin().from("bookings").delete().eq("id", id);
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
   return NextResponse.json({ success: true });
 }
