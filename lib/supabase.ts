@@ -7,3 +7,12 @@ const getSupabase = () => createClient(
 
 export default getSupabase;
 export { getSupabase as supabase };
+
+export type TourHistory = {
+  id: string;
+  tour_id: string;
+  action: "created" | "updated" | "deleted" | "confirmed";
+  changed_by: string;
+  snapshot: Record<string, unknown>;
+  created_at: string;
+};
