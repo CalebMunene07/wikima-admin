@@ -1,6 +1,6 @@
 export const runtime = 'edge';
 import { NextRequest, NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase-server";
+import { getSupabaseAdmin as supabaseAdmin } from "@/lib/supabase-server";
 
 export async function GET() {
   const { data, error } = await supabaseAdmin

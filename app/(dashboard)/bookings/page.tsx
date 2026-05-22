@@ -1,5 +1,5 @@
 export const runtime = 'edge';
-import { supabaseAdmin } from "@/lib/supabase-server";
+import { getSupabaseAdmin as supabaseAdmin } from "@/lib/supabase-server";
 import BookingsTable from "@/components/BookingsTable";
 export const revalidate = 0;
 export default async function BookingsPage() {

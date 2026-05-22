@@ -1,5 +1,5 @@
 export const runtime = 'edge';
-import { supabaseAdmin } from "@/lib/supabase-server";
+import { getSupabaseAdmin as supabaseAdmin } from "@/lib/supabase-server";
 import TourForm from "@/components/TourForm";
 import { notFound } from "next/navigation";
 type Props = { params: Promise<{ id: string }> };

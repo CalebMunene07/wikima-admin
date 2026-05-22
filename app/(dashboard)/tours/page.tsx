@@ -1,5 +1,5 @@
 export const runtime = 'edge';
-import { supabaseAdmin } from "@/lib/supabase-server";
+import { getSupabaseAdmin as supabaseAdmin } from "@/lib/supabase-server";
 import ToursTable from "@/components/ToursTable";
 import Link from "next/link";
 export const revalidate = 0;

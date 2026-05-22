@@ -1,6 +1,6 @@
 export const runtime = 'edge';
 import { NextRequest, NextResponse } from "next/server";
-import { supabaseAdmin, logHistory } from "@/lib/supabase-server";
+import { getSupabaseAdmin as supabaseAdmin, logHistory } from "@/lib/supabase-server";
 export async function GET() {
   const { data, error } = await supabaseAdmin().from("tours").select("*").order("created_at", { ascending: false });
   if (error) return NextResponse.json({ error }, { status: 500 });

@@ -1,5 +1,5 @@
 export const runtime = 'edge';
-import { supabaseAdmin } from "@/lib/supabase-server";
+import { getSupabaseAdmin as supabaseAdmin } from "@/lib/supabase-server";
 import StatsCard from "@/components/StatsCard";
 export const revalidate = 0;
 export default async function AnalyticsPage() {
