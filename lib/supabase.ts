@@ -25,3 +25,12 @@ export type Tour = {
   created_at: string;
   updated_at: string;
 };
+
+export type TourHistory = {
+  id: string;
+  tour_id: string;
+  action: "created" | "updated" | "deleted" | "confirmed";
+  changed_by: string;
+  snapshot: Record<string, unknown>;
+  created_at: string;
+};
