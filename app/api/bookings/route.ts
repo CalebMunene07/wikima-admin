@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin as supabaseAdmin } from "@/lib/supabase-server";
 
 export async function GET() {
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await supabaseAdmin()
     .from("bookings")
     .select("*")
     .order("created_at", { ascending: false });
@@ -14,7 +14,7 @@ export async function GET() {
 export async function PUT(req: NextRequest) {
   const { id, status } = await req.json();
   if (!id || !status) return NextResponse.json({ error: "id and status required" }, { status: 400 });
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await supabaseAdmin()
     .from("bookings")
     .update({ status })
     .eq("id", id)
