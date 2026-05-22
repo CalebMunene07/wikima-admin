@@ -1,11 +1,13 @@
 import { createClient } from "@supabase/supabase-js";
 
+const SUPABASE_URL = "https://bsxzqjalhrhbwsqrqoao.supabase.co";
+
 export function getSupabaseAdmin() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { autoRefreshToken: false, persistSession: false } }
-  );
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? 
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzeHpxamFsaHJoYndzcXJxb2FvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTg1NDE4OSwiZXhwIjoyMDkxNDMwMTg5fQ.X1w9V1dVK0036brM55d9KKIA4XKg7daLBhqDVu2WwPI";
+  return createClient(SUPABASE_URL, serviceRoleKey, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
 }
 
 export async function logHistory(
