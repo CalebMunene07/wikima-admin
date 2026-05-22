@@ -2,3 +2,7 @@ name = "wikima-admin"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
+
+[vars]
+NEXT_PUBLIC_SUPABASE_URL = "https://bsxzqjalhrhbwsqrqoao.supabase.co"
+NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzeHpxamFsaHJoYndzcXJxb2FvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4NTQxODksImV4cCI6MjA5MTQzMDE4OX0.7TW-wqRrBrIfzgEcVmhQ1LEDcVbDM11CnI0X1EBMtw4"
