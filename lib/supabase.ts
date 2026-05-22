@@ -8,24 +8,20 @@ const getSupabase = () => createClient(
 export default getSupabase;
 export { getSupabase as supabase };
 
-export type TourHistory = {
-  id: string;
-  tour_id: string;
-  action: "created" | "updated" | "deleted" | "confirmed";
-  changed_by: string;
-  snapshot: Record<string, unknown>;
-  created_at: string;
-};
+
 
 export type Tour = {
   id: string;
   title: string;
-  description: string;
-  price: number;
-  duration: string;
-  location: string;
+  slug: string;
+  category: string;
+  long_description: string;
   image_url: string;
-  available: boolean;
+  standard_price: number;
+  premium_price: number;
+  luxury_price: number;
+  is_active: boolean;
+  tags: string[];
   created_at: string;
   updated_at: string;
 };
