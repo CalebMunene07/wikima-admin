@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 const links = [
-  { href: "/",         label: "Analytics",  icon: LayoutDashboard },
+  { href: "/analytics", label: "Analytics",  icon: LayoutDashboard },
   { href: "/tours",    label: "Tours",       icon: Map },
   { href: "/bookings", label: "Bookings",    icon: CalendarCheck },
   { href: "/history",  label: "History",     icon: History },
