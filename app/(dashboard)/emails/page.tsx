@@ -253,7 +253,7 @@ const EmailListItem: React.FC<{
 
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 3 }}>
-          <span style={{ fontSize: 13, fontWeight: email.isUnread ? 700 : 500, color: email.isUnread ? "#e8f5e9" : "rgba(255,255,255,0.7)", fontFamily: "'DM Sans',sans-serif", truncate: true, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: 160 }}>
+          <span style={{ fontSize: 13, fontWeight: email.isUnread ? 700 : 500, color: email.isUnread ? "#e8f5e9" : "rgba(255,255,255,0.7)", fontFamily: "'DM Sans',sans-serif", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: 160 }}>
             {name}
           </span>
           <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", fontFamily: "'DM Sans',sans-serif", flexShrink: 0 }}>
