@@ -5,10 +5,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { google } from "googleapis";
 
-export const runtime = "edge";
+// FIX 1: Change runtime from "edge" to "nodejs" to support native Node modules (http/https)
+export const runtime = "nodejs";
 
 function getOAuth2Client() {
-  return new (require("googleapis").google.auth.OAuth2)(
+  // FIX 2: Use the already imported 'google' object instead of throwing with a CommonJS require()
+  return new google.auth.OAuth2(
     process.env.GMAIL_CLIENT_ID,
     process.env.GMAIL_CLIENT_SECRET,
     process.env.GMAIL_REDIRECT_URI
