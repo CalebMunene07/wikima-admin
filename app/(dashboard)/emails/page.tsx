@@ -372,7 +372,7 @@ export default function EmailsPage() {
   const [nextPage,  setNextPage]  = useState<string | undefined>(undefined);
   const [error,     setError]     = useState("");
   const [unreadCount, setUnreadCount] = useState(0);
-  const autoRefreshRef = useRef<NodeJS.Timeout>();
+  const autoRefreshRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const fetchEmails = useCallback(async (pageToken?: string) => {
     setLoading(true); setError("");
