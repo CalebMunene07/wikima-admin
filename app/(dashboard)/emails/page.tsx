@@ -400,7 +400,9 @@ export default function EmailsPage() {
   // Auto-refresh every 60 seconds
   useEffect(() => {
     autoRefreshRef.current = setInterval(() => fetchEmails(), 60_000);
-    return () => clearInterval(autoRefreshRef.current);
+    return () => {
+    if (autoRefreshRef.current) clearInterval(autoRefreshRef.current);
+  };
   }, [fetchEmails]);
 
   const openEmail = async (id: string) => {
