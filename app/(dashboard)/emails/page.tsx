@@ -8,7 +8,7 @@ import {
   Mail, Clock, AlertCircle, CheckCircle2, Loader2,
 } from "lucide-react";
 
-// ── Types ────────────────────────────────────────────────────────────────
+// ── Types ────────────────────────────────────────────────────────────[...]
 interface EmailSummary {
   id: string;
   threadId: string;
@@ -36,7 +36,7 @@ const FROM_ALIASES = [
   { label: "wikimasafari02@gmail.com",      value: "" }, // empty = default Gmail
 ];
 
-// ── Helpers ────────────────────────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────────────────
 function formatDate(dateStr: string) {
   if (!dateStr) return "";
   const d = new Date(dateStr);
@@ -177,7 +177,7 @@ const ComposeModal: React.FC<{
 
         {/* Reply quote */}
         {replyTo && (
-          <div style={{ margin: "0 20px", padding: "10px 14px", background: "rgba(255,255,255,0.03)", borderLeft: "2px solid rgba(74,124,89,0.5)", borderRadius: 6, fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
+          <div style={{ margin: "0 20px", padding: "10px 14px", background: "rgba(255,255,255,0.03)", borderLeft: "2px solid rgba(74,124,89,0.5)", borderRadius: 6, fontSize: 12, color: "rgba(255,255,255,0.3)" }}>
             <strong style={{ color: "rgba(255,255,255,0.4)" }}>On {formatDate(replyTo.date)}, {parseName(replyTo.from)} wrote:</strong>
             <br/>
             {replyTo.bodyText?.slice(0, 200)}…
@@ -253,7 +253,7 @@ const EmailListItem: React.FC<{
 
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 3 }}>
-          <span style={{ fontSize: 13, fontWeight: email.isUnread ? 700 : 500, color: email.isUnread ? "#e8f5e9" : "rgba(255,255,255,0.7)", fontFamily: "'DM Sans',sans-serif", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          <span style={{ fontSize: 13, fontWeight: email.isUnread ? 700 : 500, color: email.isUnread ? "#e8f5e9" : "rgba(255,255,255,0.7)", fontFamily: "'DM Sans',sans-serif", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: 160 }}>
             {name}
           </span>
           <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", fontFamily: "'DM Sans',sans-serif", flexShrink: 0 }}>
@@ -292,7 +292,7 @@ const EmailDetail: React.FC<{
     <div style={{ display: "flex", flexDirection: "column", height: "100%", overflow: "hidden" }}>
       {/* Header */}
       <div style={{ padding: "16px 24px", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
-        <button onClick={onBack} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", padding: 6, borderRadius: 8, display: "flex", alignItems: "center", gap: 4, fontSize: 13, fontFamily: "'DM Sans',sans-serif" }}
+        <button onClick={onBack} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", padding: 6, borderRadius: 8, display: "flex", alignItems: "center" }}
           onMouseEnter={e => (e.currentTarget.style.color = "#52b788")} onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}>
           <ChevronLeft size={16}/> Back
         </button>
@@ -302,7 +302,7 @@ const EmailDetail: React.FC<{
           <Star size={16} fill={email.isStarred ? "#f6c90e" : "none"}/>
         </button>
         <button onClick={onReply}
-          style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 16px", background: "#2d6a4f", border: "none", borderRadius: 8, color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}
+          style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 16px", background: "#2d6a4f", border: "none", borderRadius: 8, color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer" }}
           onMouseEnter={e => (e.currentTarget.style.background = "#40916c")} onMouseLeave={e => (e.currentTarget.style.background = "#2d6a4f")}>
           <Reply size={13}/> Reply
         </button>
@@ -459,7 +459,7 @@ export default function EmailsPage() {
           </p>
         </div>
         <button onClick={() => { setReplyTo(undefined); setCompose(true); }}
-          style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 20px", background: "#2d6a4f", border: "none", borderRadius: 10, color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>
+          style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 20px", background: "#2d6a4f", border: "none", borderRadius: 10, color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
           <Plus size={14}/> Compose
         </button>
       </div>
@@ -519,7 +519,9 @@ export default function EmailsPage() {
                 placeholder="Search emails…"
                 style={{ flex: 1, background: "transparent", border: "none", color: "#fff", fontSize: 13, fontFamily: "'DM Sans',sans-serif", outline: "none" }}
               />
-              {searchInput && <button onClick={() => { setSearchInput(""); setSearch(""); }} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", cursor: "pointer", padding: 4, fontSize: 16 }}>✕</button>}
+              {searchInput && <button onClick={() => { setSearchInput(""); setSearch(""); }} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", cursor: "pointer", padding: 4 }}>
+                <X size={14}/>
+              </button>}
             </div>
           </div>
 
@@ -528,7 +530,7 @@ export default function EmailsPage() {
             <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", fontFamily: "'DM Sans',sans-serif" }}>
               {emails.length} messages
             </span>
-            <button onClick={() => fetchEmails()} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", cursor: "pointer", padding: 4, borderRadius: 6, transition: "color 0.2s", display: "flex", alignItems: "center" }}
+            <button onClick={() => fetchEmails()} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", cursor: "pointer", padding: 4, borderRadius: 6, transition: "color 0.2s" }}
               onMouseEnter={e => (e.currentTarget.style.color = "#52b788")} onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.3)")}>
               <RefreshCw size={13} style={{ animation: loading ? "spin 1s linear infinite" : "none" }}/>
             </button>
@@ -536,7 +538,7 @@ export default function EmailsPage() {
 
           {/* Error */}
           {error && (
-            <div style={{ margin: "0 12px 8px", padding: "8px 12px", background: "rgba(220,38,38,0.1)", border: "1px solid rgba(220,38,38,0.3)", borderRadius: 8, fontSize: 11, color: "#fca5a5", fontFamily: "'DM Sans',sans-serif", display: "flex", gap: 8 }}>
+            <div style={{ margin: "0 12px 8px", padding: "8px 12px", background: "rgba(220,38,38,0.1)", border: "1px solid rgba(220,38,38,0.3)", borderRadius: 8, fontSize: 11, color: "#fca5a5", fontFamily: "'DM Sans',sans-serif", display: "flex", alignItems: "flex-start", gap: 8 }}>
               <AlertCircle size={12} style={{ flexShrink: 0, marginTop: 1 }}/>
               {error}
             </div>
