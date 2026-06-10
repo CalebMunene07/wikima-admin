@@ -276,7 +276,7 @@ const EmailListItem: React.FC<{
   );
 };
 
-// ── Email Detail View ─────────────────���────────────────────────────────────
+// ── Email Detail View ──────────────────────────────────────────────────────
 const EmailDetail: React.FC<{
   email: EmailFull;
   onBack: () => void;
