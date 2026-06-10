@@ -3,7 +3,6 @@ export const runtime = "edge";
 // GET /api/gmail/messages/[id]  — full message body
 // PATCH /api/gmail/messages/[id] — mark read/unread/starred/trash
 
-import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 
