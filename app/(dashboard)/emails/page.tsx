@@ -8,7 +8,7 @@ import {
   Mail, Clock, AlertCircle, CheckCircle2, Loader2,
 } from "lucide-react";
 
-// ── Types ────────────────────────────────────────────────────────────[...]
+// ── Types ────────────────────────────────────────────────────────────────
 interface EmailSummary {
   id: string;
   threadId: string;
@@ -36,7 +36,7 @@ const FROM_ALIASES = [
   { label: "wikimasafari02@gmail.com",      value: "" }, // empty = default Gmail
 ];
 
-// ── Helpers ───────────────────────────────────────────────────────────…[...]
+// ── Helpers ────────────────────────────────────────────────────────────────
 function formatDate(dateStr: string) {
   if (!dateStr) return "";
   const d = new Date(dateStr);
@@ -71,7 +71,7 @@ function avatarColor(name: string) {
   return AVATAR_COLORS[Math.abs(h) % AVATAR_COLORS.length];
 }
 
-// ── Compose / Reply Modal ─────────────────────────────────────────────────────
+// ── Compose / Reply Modal ──────────────────────────────────────────────────
 const ComposeModal: React.FC<{
   replyTo?: EmailFull;
   onClose: () => void;
@@ -155,7 +155,7 @@ const ComposeModal: React.FC<{
             <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", fontFamily: "'DM Sans',sans-serif", width: 48, flexShrink: 0 }}>To</span>
             <input value={to} onChange={e => setTo(e.target.value)} placeholder="recipient@email.com"
               style={{ flex: 1, background: "transparent", border: "none", color: "#fff", fontSize: 13, fontFamily: "'DM Sans',sans-serif", outline: "none" }}/>
-            <button onClick={() => setShowCc(!showCc)} style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", background: "none", border: "none", cursor: "pointer", fontFamily: "'DM Sans',sans-se[...]
+            <button onClick={() => setShowCc(!showCc)} style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", background: "none", border: "none", cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>
               {showCc ? "−Cc" : "+Cc"}
             </button>
           </div>
@@ -177,7 +177,7 @@ const ComposeModal: React.FC<{
 
         {/* Reply quote */}
         {replyTo && (
-          <div style={{ margin: "0 20px", padding: "10px 14px", background: "rgba(255,255,255,0.03)", borderLeft: "2px solid rgba(74,124,89,0.5)", borderRadius: 6, fontSize: 12, color: "rgba(255,[...]
+          <div style={{ margin: "0 20px", padding: "10px 14px", background: "rgba(255,255,255,0.03)", borderLeft: "2px solid rgba(74,124,89,0.5)", borderRadius: 6, fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
             <strong style={{ color: "rgba(255,255,255,0.4)" }}>On {formatDate(replyTo.date)}, {parseName(replyTo.from)} wrote:</strong>
             <br/>
             {replyTo.bodyText?.slice(0, 200)}…
@@ -198,7 +198,7 @@ const ComposeModal: React.FC<{
 
         {/* Error */}
         {error && (
-          <div style={{ margin: "0 20px 8px", padding: "8px 12px", background: "rgba(220,38,38,0.15)", border: "1px solid rgba(220,38,38,0.3)", borderRadius: 8, fontSize: 12, color: "#fca5a5", fo[...]
+          <div style={{ margin: "0 20px 8px", padding: "8px 12px", background: "rgba(220,38,38,0.15)", border: "1px solid rgba(220,38,38,0.3)", borderRadius: 8, fontSize: 12, color: "#fca5a5", fontFamily: "'DM Sans',sans-serif" }}>
             {error}
           </div>
         )}
@@ -223,7 +223,7 @@ const ComposeModal: React.FC<{
   );
 };
 
-// ── Email List Item ────────────────────────────────────────────────────────…[...]
+// ── Email List Item ────────────────────────────────────────────────────────
 const EmailListItem: React.FC<{
   email: EmailSummary;
   isActive: boolean;
@@ -247,20 +247,20 @@ const EmailListItem: React.FC<{
       onMouseLeave={e => { if (!isActive) (e.currentTarget as HTMLElement).style.background = email.isUnread ? "rgba(255,255,255,0.03)" : "transparent"; }}
     >
       {/* Avatar */}
-      <div style={{ width: 36, height: 36, borderRadius: "50%", background: color, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 12, fontWeight: 700, c[...]
+      <div style={{ width: 36, height: 36, borderRadius: "50%", background: color, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 12, fontWeight: 700, color: "#fff" }}>
         {initials}
       </div>
 
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 3 }}>
-          <span style={{ fontSize: 13, fontWeight: email.isUnread ? 700 : 500, color: email.isUnread ? "#e8f5e9" : "rgba(255,255,255,0.7)", fontFamily: "'DM Sans',sans-serif", overflow: "hidden",[...]
+          <span style={{ fontSize: 13, fontWeight: email.isUnread ? 700 : 500, color: email.isUnread ? "#e8f5e9" : "rgba(255,255,255,0.7)", fontFamily: "'DM Sans',sans-serif", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
             {name}
           </span>
           <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", fontFamily: "'DM Sans',sans-serif", flexShrink: 0 }}>
             {formatDate(email.date)}
           </span>
         </div>
-        <div style={{ fontSize: 12, fontWeight: email.isUnread ? 600 : 400, color: email.isUnread ? "#c8e6c9" : "rgba(255,255,255,0.5)", fontFamily: "'DM Sans',sans-serif", overflow: "hidden", te[...]
+        <div style={{ fontSize: 12, fontWeight: email.isUnread ? 600 : 400, color: email.isUnread ? "#c8e6c9" : "rgba(255,255,255,0.5)", fontFamily: "'DM Sans',sans-serif", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
           {email.subject}
         </div>
         <div style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", fontFamily: "'DM Sans',sans-serif", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
@@ -276,7 +276,7 @@ const EmailListItem: React.FC<{
   );
 };
 
-// ── Email Detail View ───────────────────────────────────────────────────────…[...]
+// ── Email Detail View ─────────────────���────────────────────────────────────
 const EmailDetail: React.FC<{
   email: EmailFull;
   onBack: () => void;
@@ -292,7 +292,7 @@ const EmailDetail: React.FC<{
     <div style={{ display: "flex", flexDirection: "column", height: "100%", overflow: "hidden" }}>
       {/* Header */}
       <div style={{ padding: "16px 24px", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
-        <button onClick={onBack} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", padding: 6, borderRadius: 8, display: "flex", alignItems: "center"[...]
+        <button onClick={onBack} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", padding: 6, borderRadius: 8, display: "flex", alignItems: "center", gap: 4, fontSize: 13, fontFamily: "'DM Sans',sans-serif" }}
           onMouseEnter={e => (e.currentTarget.style.color = "#52b788")} onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}>
           <ChevronLeft size={16}/> Back
         </button>
@@ -302,7 +302,7 @@ const EmailDetail: React.FC<{
           <Star size={16} fill={email.isStarred ? "#f6c90e" : "none"}/>
         </button>
         <button onClick={onReply}
-          style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 16px", background: "#2d6a4f", border: "none", borderRadius: 8, color: "#fff", fontSize: 12, fontWeight: 700, cursor[...]
+          style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 16px", background: "#2d6a4f", border: "none", borderRadius: 8, color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}
           onMouseEnter={e => (e.currentTarget.style.background = "#40916c")} onMouseLeave={e => (e.currentTarget.style.background = "#2d6a4f")}>
           <Reply size={13}/> Reply
         </button>
@@ -321,7 +321,7 @@ const EmailDetail: React.FC<{
 
         {/* Sender row */}
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-          <div style={{ width: 40, height: 40, borderRadius: "50%", background: color, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 700, color: "#fff[...]
+          <div style={{ width: 40, height: 40, borderRadius: "50%", background: color, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 700, color: "#fff" }}>
             {initials}
           </div>
           <div>
@@ -358,7 +358,7 @@ const EmailDetail: React.FC<{
   );
 };
 
-// ── Main Emails Page ────────────────────────────────────────────────────────[...]
+// ── Main Emails Page ───────────────────────────────────────────────────────
 export default function EmailsPage() {
   const [folder,    setFolder]    = useState<Folder>("inbox");
   const [emails,    setEmails]    = useState<EmailSummary[]>([]);
@@ -459,7 +459,7 @@ export default function EmailsPage() {
           </p>
         </div>
         <button onClick={() => { setReplyTo(undefined); setCompose(true); }}
-          style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 20px", background: "#2d6a4f", border: "none", borderRadius: 10, color: "#fff", fontSize: 13, fontWeight: 700, curs[...]
+          style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 20px", background: "#2d6a4f", border: "none", borderRadius: 10, color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>
           <Plus size={14}/> Compose
         </button>
       </div>
@@ -519,7 +519,7 @@ export default function EmailsPage() {
                 placeholder="Search emails…"
                 style={{ flex: 1, background: "transparent", border: "none", color: "#fff", fontSize: 13, fontFamily: "'DM Sans',sans-serif", outline: "none" }}
               />
-              {searchInput && <button onClick={() => { setSearchInput(""); setSearch(""); }} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", cursor: "pointer", paddin[...]
+              {searchInput && <button onClick={() => { setSearchInput(""); setSearch(""); }} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", cursor: "pointer", padding: 4, fontSize: 16 }}>✕</button>}
             </div>
           </div>
 
@@ -528,7 +528,7 @@ export default function EmailsPage() {
             <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", fontFamily: "'DM Sans',sans-serif" }}>
               {emails.length} messages
             </span>
-            <button onClick={() => fetchEmails()} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", cursor: "pointer", padding: 4, borderRadius: 6, transition: "color 0[...]
+            <button onClick={() => fetchEmails()} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", cursor: "pointer", padding: 4, borderRadius: 6, transition: "color 0.2s", display: "flex", alignItems: "center" }}
               onMouseEnter={e => (e.currentTarget.style.color = "#52b788")} onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.3)")}>
               <RefreshCw size={13} style={{ animation: loading ? "spin 1s linear infinite" : "none" }}/>
             </button>
@@ -536,7 +536,7 @@ export default function EmailsPage() {
 
           {/* Error */}
           {error && (
-            <div style={{ margin: "0 12px 8px", padding: "8px 12px", background: "rgba(220,38,38,0.1)", border: "1px solid rgba(220,38,38,0.3)", borderRadius: 8, fontSize: 11, color: "#fca5a5", f[...]
+            <div style={{ margin: "0 12px 8px", padding: "8px 12px", background: "rgba(220,38,38,0.1)", border: "1px solid rgba(220,38,38,0.3)", borderRadius: 8, fontSize: 11, color: "#fca5a5", fontFamily: "'DM Sans',sans-serif", display: "flex", gap: 8 }}>
               <AlertCircle size={12} style={{ flexShrink: 0, marginTop: 1 }}/>
               {error}
             </div>
@@ -562,7 +562,7 @@ export default function EmailsPage() {
                 {nextPage && (
                   <div style={{ padding: "12px 16px", textAlign: "center" }}>
                     <button onClick={() => fetchEmails(nextPage)}
-                      style={{ fontSize: 12, color: "#52b788", background: "none", border: "1px solid rgba(82,183,136,0.3)", borderRadius: 8, padding: "7px 20px", cursor: "pointer", fontFamily: "[...]
+                      style={{ fontSize: 12, color: "#52b788", background: "none", border: "1px solid rgba(82,183,136,0.3)", borderRadius: 8, padding: "7px 20px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif" }}>
                       Load more
                     </button>
                   </div>
