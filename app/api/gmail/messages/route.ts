@@ -1,105 +1,71 @@
 export const runtime = "edge";
-// app/api/gmail/messages/route.ts
-// GET  /api/gmail/messages?folder=inbox&page=1&search=
-// Returns paginated email list
+// GET /api/gmail/messages?folder=inbox&search=&pageToken=
 
 import { NextRequest, NextResponse } from "next/server";
-import { google } from "googleapis";
 
-// FIX 1: Change runtime from "edge" to "nodejs" to support native Node modules (http/https)
-export const runtime = "nodejs";
-
-function getOAuth2Client() {
-  // FIX 2: Use the already imported 'google' object instead of throwing with a CommonJS require()
-  return new google.auth.OAuth2(
-    process.env.GMAIL_CLIENT_ID,
-    process.env.GMAIL_CLIENT_SECRET,
-    process.env.GMAIL_REDIRECT_URI
-  );
+async function getAccessToken(): Promise<string> {
+  const res = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      client_id: process.env.GMAIL_CLIENT_ID!,
+      client_secret: process.env.GMAIL_CLIENT_SECRET!,
+      refresh_token: process.env.GMAIL_REFRESH_TOKEN!,
+      grant_type: "refresh_token",
+    }),
+  });
+  const data = await res.json();
+  if (!data.access_token) throw new Error("Failed to get access token");
+  return data.access_token;
 }
 
-async function getGmailClient() {
-  const auth = getOAuth2Client();
-  auth.setCredentials({ refresh_token: process.env.GMAIL_REFRESH_TOKEN });
-  return google.gmail({ version: "v1", auth });
-}
-
-function decodeBase64(str: string) {
-  return Buffer.from(str.replace(/-/g, "+").replace(/_/g, "/"), "base64").toString("utf-8");
-}
-
-function extractBody(payload: any): string {
-  if (!payload) return "";
-  if (payload.mimeType === "text/plain" && payload.body?.data)
-    return decodeBase64(payload.body.data);
-  if (payload.mimeType === "text/html" && payload.body?.data)
-    return decodeBase64(payload.body.data);
-  if (payload.parts) {
-    // Prefer plain text
-    const plain = payload.parts.find((p: any) => p.mimeType === "text/plain");
-    if (plain?.body?.data) return decodeBase64(plain.body.data);
-    const html = payload.parts.find((p: any) => p.mimeType === "text/html");
-    if (html?.body?.data) return decodeBase64(html.body.data);
-    // Recurse into multipart
-    for (const part of payload.parts) {
-      const body = extractBody(part);
-      if (body) return body;
-    }
-  }
-  return "";
-}
-
-function getHeader(headers: any[], name: string) {
-  return headers.find((h: any) => h.name.toLowerCase() === name.toLowerCase())?.value || "";
+function getHeader(headers: { name: string; value: string }[], name: string) {
+  return headers.find((h) => h.name.toLowerCase() === name.toLowerCase())?.value || "";
 }
 
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-    const folder  = searchParams.get("folder") || "inbox";
-    const search  = searchParams.get("search") || "";
-    const pageToken = searchParams.get("pageToken") || undefined;
+    const folder    = searchParams.get("folder") || "inbox";
+    const search    = searchParams.get("search") || "";
+    const pageToken = searchParams.get("pageToken") || "";
 
-    const labelMap: Record<string, string> = {
-      inbox: "INBOX",
-      sent: "SENT",
-      starred: "STARRED",
-      trash: "TRASH",
+    const folderQuery: Record<string, string> = {
+      inbox:   "in:inbox",
+      sent:    "in:sent",
+      starred: "is:starred",
+      trash:   "in:trash",
     };
 
-    const gmail = await getGmailClient();
+    const q = [folderQuery[folder], search].filter(Boolean).join(" ");
+    const token = await getAccessToken();
 
-    let q = search;
-    if (folder === "inbox") q = `in:inbox ${q}`.trim();
-    if (folder === "sent")  q = `in:sent ${q}`.trim();
-    if (folder === "starred") q = `is:starred ${q}`.trim();
+    const listParams = new URLSearchParams({ maxResults: "20" });
+    if (q) listParams.set("q", q);
+    if (pageToken) listParams.set("pageToken", pageToken);
 
-    const listRes = await gmail.users.messages.list({
-      userId: "me",
-      q: q || undefined,
-      labelIds: labelMap[folder] ? [labelMap[folder]] : undefined,
-      maxResults: 20,
-      pageToken,
-    });
+    const listRes = await fetch(
+      `https://gmail.googleapis.com/gmail/v1/users/me/messages?${listParams}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    const listData = await listRes.json();
+    if (!listRes.ok) throw new Error(listData.error?.message || "Failed to list messages");
 
-    const messages = listRes.data.messages || [];
-    const nextPageToken = listRes.data.nextPageToken;
+    const messages: { id: string }[] = listData.messages || [];
+    const nextPageToken: string | undefined = listData.nextPageToken;
 
-    // Fetch message details in parallel (snippet + headers only for list view)
+    // Fetch metadata for each message in parallel
     const details = await Promise.all(
-      messages.map((m: any) =>
-        gmail.users.messages.get({
-          userId: "me",
-          id: m.id,
-          format: "metadata",
-          metadataHeaders: ["Subject", "From", "To", "Date"],
-        })
+      messages.map((m) =>
+        fetch(
+          `https://gmail.googleapis.com/gmail/v1/users/me/messages/${m.id}?format=metadata&metadataHeaders=Subject&metadataHeaders=From&metadataHeaders=To&metadataHeaders=Date`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        ).then((r) => r.json())
       )
     );
 
-    const emails = details.map((d: any) => {
-      const msg = d.data;
-      const headers = msg.payload?.headers || [];
+    const emails = details.map((msg: any) => {
+      const headers: { name: string; value: string }[] = msg.payload?.headers || [];
       return {
         id: msg.id,
         threadId: msg.threadId,
@@ -109,8 +75,8 @@ export async function GET(req: NextRequest) {
         date: getHeader(headers, "Date"),
         snippet: msg.snippet || "",
         labelIds: msg.labelIds || [],
-        isUnread: msg.labelIds?.includes("UNREAD"),
-        isStarred: msg.labelIds?.includes("STARRED"),
+        isUnread: (msg.labelIds || []).includes("UNREAD"),
+        isStarred: (msg.labelIds || []).includes("STARRED"),
       };
     });
 

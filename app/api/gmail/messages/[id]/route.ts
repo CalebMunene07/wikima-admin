@@ -4,7 +4,6 @@ export const runtime = "edge";
 // PATCH /api/gmail/messages/[id] — mark read/unread/starred/trash
 
 
-export const runtime = "edge";
 
 // Lightweight URL-Safe Base64 decode using native browser/edge primitives
 function decodeBase64(str: string): string {
