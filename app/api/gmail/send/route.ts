@@ -1,3 +1,4 @@
+export const runtime = "edge";
 // app/api/gmail/send/route.ts
 // POST /api/gmail/send
 // Body: { to, subject, body, threadId?, fromAlias? }

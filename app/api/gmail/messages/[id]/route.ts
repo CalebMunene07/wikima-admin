@@ -1,3 +1,4 @@
+export const runtime = "edge";
 // app/api/gmail/messages/[id]/route.ts
 // GET /api/gmail/messages/[id]  — full message body
 // PATCH /api/gmail/messages/[id] — mark read/unread/starred/trash

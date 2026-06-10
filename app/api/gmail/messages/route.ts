@@ -1,3 +1,4 @@
+export const runtime = "edge";
 // app/api/gmail/messages/route.ts
 // GET  /api/gmail/messages?folder=inbox&page=1&search=
 // Returns paginated email list
