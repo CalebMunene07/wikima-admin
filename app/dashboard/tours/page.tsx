@@ -12,7 +12,7 @@ export default async function ToursPage() {
           <h1 className="text-2xl font-bold" style={{ color: "#f5f0e8" }}>Tours</h1>
           <p className="text-sm mt-0.5" style={{ color: "rgba(245,240,232,0.5)" }}>{tours?.length ?? 0} tours total</p>
         </div>
-        <Link href="/tours/new"
+        <Link href="/dashboard/tours/new"
           className="px-4 py-2 font-semibold text-sm rounded-lg transition-colors"
           style={{ background: "linear-gradient(135deg, #D4AF37, #a07830)", color: "#07301d" }}>
           + New Tour

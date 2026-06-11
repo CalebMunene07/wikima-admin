@@ -23,7 +23,7 @@ export default function ToursTable({ tours }: { tours: Tour[] }) {
 
   if (!tours.length) return (
     <div className="text-center py-20 text-stone-400 text-sm">
-      No tours yet. <Link href="/tours/new" className="text-amber-600 underline">Create one</Link>.
+      No tours yet. <Link href="/dashboard/tours/new" className="text-amber-600 underline">Create one</Link>.
     </div>
   );
 

@@ -58,7 +58,7 @@ export default function TourForm({ tour }: { tour?: Tour }) {
     const data = await res.json();
     setLoading(false);
     if (!res.ok) { setError(data.error?.message ?? "Something went wrong."); return; }
-    router.push("/tours"); router.refresh();
+    router.push("/dashboard/tours"); router.refresh();
   };
 
   return (
