@@ -3,12 +3,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Tour } from "@/lib/supabase";
-import { Pencil, Trash2, Eye } from "lucide-react";
-
+import { Pencil, Trash2 } from "lucide-react";
 export default function ToursTable({ tours }: { tours: Tour[] }) {
   const router = useRouter();
   const [deleting, setDeleting] = useState<string | null>(null);
-
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this tour?")) return;
     setDeleting(id);
@@ -20,13 +18,11 @@ export default function ToursTable({ tours }: { tours: Tour[] }) {
     setDeleting(null);
     router.refresh();
   };
-
   if (!tours.length) return (
     <div className="text-center py-20 text-stone-400 text-sm">
       No tours yet. <Link href="/dashboard/tours/new" className="text-amber-600 underline">Create one</Link>.
     </div>
   );
-
   return (
     <div className="overflow-hidden rounded-xl border border-stone-200 bg-white">
       <table className="min-w-full text-sm">
@@ -60,8 +56,7 @@ export default function ToursTable({ tours }: { tours: Tour[] }) {
               </td>
               <td className="px-4 py-3">
                 <div className="flex items-center gap-2">
-                  <Link href={`/tours/${tour.id}`} className="p-1.5 rounded-lg hover:bg-stone-100 text-stone-400 hover:text-stone-700"><Eye size={15} /></Link>
-                  <Link href={`/tours/${tour.id}`} className="p-1.5 rounded-lg hover:bg-amber-50 text-stone-400 hover:text-amber-600"><Pencil size={15} /></Link>
+                  <Link href={`/dashboard/tours/${tour.id}`} className="p-1.5 rounded-lg hover:bg-amber-50 text-stone-400 hover:text-amber-600"><Pencil size={15} /></Link>
                   <button onClick={() => handleDelete(tour.id)} disabled={deleting === tour.id}
                     className="p-1.5 rounded-lg hover:bg-red-50 text-stone-400 hover:text-red-500 disabled:opacity-40">
                     <Trash2 size={15} />
