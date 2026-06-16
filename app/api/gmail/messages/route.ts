@@ -1,4 +1,4 @@
-export const runtime = "edge";
+export const runtime = "nodejs";
 // GET /api/gmail/messages?folder=inbox&search=&pageToken=
 import { NextRequest, NextResponse } from "next/server";
 async function getAccessToken(): Promise<string> {
