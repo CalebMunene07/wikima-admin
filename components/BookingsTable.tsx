@@ -29,7 +29,7 @@ export default function BookingsTable({ bookings }: { bookings: any[] }) {
       <table className="min-w-full text-sm">
         <thead style={{ borderBottom: "1px solid rgba(212,175,55,0.15)", background: "rgba(2,15,9,0.5)" }}>
           <tr>
-            {["Ref","Guest","Tour","Package","Travel Date","Guests","Total","Deposit","Status","Actions"].map(h => (
+            {["Ref","Guest","Tour","Package","Visitor","Referred By","Travel Date","Guests","Total","Deposit","Status","Actions"].map(h => (
               <th key={h} className="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider whitespace-nowrap"
                 style={{ color: "#D4AF37" }}>{h}</th>
             ))}
@@ -52,6 +52,29 @@ export default function BookingsTable({ bookings }: { bookings: any[] }) {
                   style={{ background: "rgba(212,175,55,0.15)", color: "#D4AF37" }}>
                   {b.package ?? "—"}
                 </span>
+              </td>
+              <td className="px-3 py-3">
+                {b.visitor_type ? (
+                  <span className="px-2 py-0.5 rounded-full text-xs font-medium capitalize whitespace-nowrap"
+                    style={{
+                      background: b.visitor_type === "resident" ? "rgba(59,130,246,0.15)" : "rgba(168,85,247,0.15)",
+                      color: b.visitor_type === "resident" ? "#60a5fa" : "#c084fc",
+                    }}>
+                    {b.visitor_type === "resident" ? "🇰🇪 Resident" : "🌍 Non-Resident"}
+                  </span>
+                ) : (
+                  <span style={{ color: "rgba(245,240,232,0.3)" }}>—</span>
+                )}
+              </td>
+              <td className="px-3 py-3">
+                {b.referred_by ? (
+                  <span className="font-mono text-xs px-2 py-0.5 rounded-md whitespace-nowrap"
+                    style={{ background: "rgba(212,175,55,0.1)", color: "#D4AF37" }}>
+                    via {b.referred_by}
+                  </span>
+                ) : (
+                  <span className="text-xs" style={{ color: "rgba(245,240,232,0.3)" }}>Direct</span>
+                )}
               </td>
               <td className="px-3 py-3 text-xs whitespace-nowrap" style={{ color: "rgba(245,240,232,0.6)" }}>
                 {b.travel_date ? new Date(b.travel_date).toLocaleDateString("en-KE", { day: "numeric", month: "short", year: "numeric" }) : "—"}
