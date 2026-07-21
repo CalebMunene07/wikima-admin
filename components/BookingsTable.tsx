@@ -29,7 +29,7 @@ export default function BookingsTable({ bookings }: { bookings: any[] }) {
       <table className="min-w-full text-sm">
         <thead style={{ borderBottom: "1px solid rgba(212,175,55,0.15)", background: "rgba(2,15,9,0.5)" }}>
           <tr>
-            {["Ref","Guest","Tour","Package","Visitor","Referred By","Travel Date","Guests","Total","Deposit","Status","Actions"].map(h => (
+            {["Ref","Guest","Tour","Package","SGR Package","Visitor","Referred By","Travel Date","Guests","Total","Deposit","Status","Actions"].map(h => (
               <th key={h} className="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider whitespace-nowrap"
                 style={{ color: "#D4AF37" }}>{h}</th>
             ))}
@@ -52,6 +52,19 @@ export default function BookingsTable({ bookings }: { bookings: any[] }) {
                   style={{ background: "rgba(212,175,55,0.15)", color: "#D4AF37" }}>
                   {b.package ?? "—"}
                 </span>
+              </td>
+              <td className="px-3 py-3">
+                {b.package === "SGR" && b.sgr_hotel ? (
+                  <div className="whitespace-nowrap">
+                    <p className="text-xs font-semibold" style={{ color: "#f5f0e8" }}>{b.sgr_hotel}</p>
+                    <p className="text-[11px] capitalize" style={{ color: "rgba(245,240,232,0.5)" }}>
+                      {(b.sgr_region ?? "").replace(/-/g, " ")}
+                      {b.sgr_rate_kes ? ` · KES ${Number(b.sgr_rate_kes).toLocaleString()}` : ""}
+                    </p>
+                  </div>
+                ) : (
+                  <span style={{ color: "rgba(245,240,232,0.3)" }}>—</span>
+                )}
               </td>
               <td className="px-3 py-3">
                 {b.visitor_type ? (
