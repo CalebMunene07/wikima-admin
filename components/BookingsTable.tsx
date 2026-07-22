@@ -7,6 +7,14 @@ export default function BookingsTable({ bookings }: { bookings: any[] }) {
   const router = useRouter();
   const [loading, setLoading] = useState<string | null>(null);
 
+  // Resolve a referral code (= the referrer's own booking reference) back to
+  // their name, so the table can show "who referred who" rather than just a
+  // code. Only works for referrers whose own booking is in this loaded set —
+  // see note below the table if a code can't be resolved.
+  const nameByReference = new Map<string, string>(
+    bookings.map((b) => [b.reference, b.guest_name])
+  );
+
   const updateStatus = async (id: string, status: string) => {
     setLoading(id);
     await fetch("/api/bookings", {
@@ -81,10 +89,14 @@ export default function BookingsTable({ bookings }: { bookings: any[] }) {
               </td>
               <td className="px-3 py-3">
                 {b.referred_by ? (
-                  <span className="font-mono text-xs px-2 py-0.5 rounded-md whitespace-nowrap"
-                    style={{ background: "rgba(212,175,55,0.1)", color: "#D4AF37" }}>
-                    via {b.referred_by}
-                  </span>
+                  <div className="whitespace-nowrap">
+                    <p className="text-xs font-semibold" style={{ color: "#D4AF37" }}>
+                      {nameByReference.get(b.referred_by) ?? "Unknown guest"}
+                    </p>
+                    <p className="font-mono text-[10px]" style={{ color: "rgba(212,175,55,0.6)" }}>
+                      {b.referred_by}{!nameByReference.has(b.referred_by) && " (not in current view)"}
+                    </p>
+                  </div>
                 ) : (
                   <span className="text-xs" style={{ color: "rgba(245,240,232,0.3)" }}>Direct</span>
                 )}
